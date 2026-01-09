@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { supabase } from "@/lib/supabaseClient";
 
 export default async function LeagueStatusPage() {
