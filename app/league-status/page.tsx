@@ -1,8 +1,22 @@
 export const dynamic = "force-dynamic";
 
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabase } from "@/lib/supabaseClient";
 
 export default async function LeagueStatusPage() {
+  let supabase;
+  try {
+    supabase = getSupabase();
+  } catch (e: any) {
+    return (
+      <main style={{ padding: 24, fontFamily: "sans-serif" }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700 }}>Midair League – Status</h1>
+        <p style={{ marginTop: 12 }}>
+          {e?.message ?? "Supabase config missing."}
+        </p>
+      </main>
+    );
+  }
+
   const { data: seasons } = await supabase
     .from("seasons")
     .select("id,name,active,start_date,end_date")
@@ -20,9 +34,7 @@ export default async function LeagueStatusPage() {
 
   return (
     <main style={{ padding: 24, fontFamily: "sans-serif" }}>
-      <h1 style={{ fontSize: 28, fontWeight: 700 }}>
-        Midair League – Status
-      </h1>
+      <h1 style={{ fontSize: 28, fontWeight: 700 }}>Midair League – Status</h1>
 
       <section style={{ marginTop: 16 }}>
         <h2>Active Season</h2>
